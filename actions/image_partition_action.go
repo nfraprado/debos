@@ -187,6 +187,7 @@ type Partition struct {
 	Name            string
 	PartLabel       string
 	PartType        string
+	PartAttrs       []string
 	PartUUID        string
 	Start           string
 	End             string
@@ -526,6 +527,13 @@ func (i ImagePartitionAction) Run(context *debos.DebosContext) error {
 
 		if p.PartType != "" {
 			err = debos.Command{}.Run("sfdisk", "sfdisk", "--part-type", context.Image, fmt.Sprintf("%d", p.number), p.PartType)
+			if err != nil {
+				return err
+			}
+		}
+
+		if p.PartAttrs != nil {
+			err = debos.Command{}.Run("sfdisk", "sfdisk", "--part-attrs", context.Image, fmt.Sprintf("%d", p.number), strings.Join(p.PartAttrs, ","))
 			if err != nil {
 				return err
 			}
