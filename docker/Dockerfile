@@ -97,6 +97,8 @@ RUN apt-get update && \
         zip \
         zstd \
         makepkg \
+        vboot-utils \
+        lz4 \
         pacman-package-manager \
         arch-install-scripts && \
     rm -rf /var/lib/apt/lists/*
